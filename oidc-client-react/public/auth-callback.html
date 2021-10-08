@@ -1,0 +1,58 @@
+<html>
+<head>
+<script>
+function init() {
+  document.getElementById('button').addEventListener('click',post);
+}
+/**
+ * sends a request to the specified url from a form. this will change the window location.
+ * @param {string} path the path to send the post request to
+ * @param {object} params the parameters to add to the url
+ * @param {string} [method=post] the method to use on the form
+ */
+
+function post() {
+    var path ='https://https-bosch-io-lnkryv.vii.mattr.global/ext/oidc/v1/verifiers/4b3434de-820f-48eb-9d03-0698065a2385/token';
+    var params = {client_id: '04d930c2-52c1-402e-ae67-94589cc19d88', client_secret: 'flY1o0JfagzXaXBFfSs8UGj8y3VGqR48rpcl', grant_type: 'authorization_code', redirect_uri: 'http://localhost:4200/auth-callback.html', code : param[1]};
+
+  // The rest of this code assumes you are not using a library.
+  // It can be made less verbose if you use one.
+  const form = document.createElement('form');
+  form.method = 'post';
+  form.action = path;
+
+  for (const key in params) {
+    if (params.hasOwnProperty(key)) {
+      const hiddenField = document.createElement('input');
+      hiddenField.type = 'hidden';
+      hiddenField.name = key;
+      hiddenField.value = params[key];
+
+      form.appendChild(hiddenField);
+    }
+  }
+
+  document.body.appendChild(form);
+  form.submit();
+}
+document.addEventListener('DOMContentLoaded', init);
+</script>
+</head>
+<body>
+<H1>Authentication Code</H1>
+<p><b><span id="path-param"/></b></p>
+<button id="button">Get Token</button>
+<script>
+console.log("ls" + location.search);
+var auth_code = '';
+var param = /[&?]code=([^&]+)/.exec(location.search);
+console.log("param: " + param);
+if (param) {
+    auth_code = param[1];
+    console.log("auth_code: " + auth_code);
+    document.getElementById('path-param').innerHTML = auth_code;
+    document.getElementById('button').disabled = false;
+} else 
+    document.getElementById('button').disabled = true;
+</script></body>
+</html>
